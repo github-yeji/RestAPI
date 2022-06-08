@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.user;
 
 import java.util.Date;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.City;
-import com.example.demo.model.Project;
+import com.example.demo.user.model.User;
+import com.example.demo.user.model.Project;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -28,7 +28,9 @@ public class InfoController {
 	public Object projectInfo() {
 
 		Project project = infoService.getProjectInfo();
+		
 		return project;
+
 	}
 
 	@GetMapping("/info2")
@@ -52,14 +54,15 @@ public class InfoController {
 
 	}
 
-	@GetMapping("/cityList")
+	@GetMapping("/userList")
 	public Object cityList() {
-		List<City> cityList = infoService.getCityList();
-		return cityList;
+		List<User> userList = infoService.getUserList();
+		return userList;
 	}
+	
 	@GetMapping("cityListByCode/{countryCode}/{population}")
 	public Object cityByCountryCode(@PathVariable("countryCode") String ctCode, @PathVariable("population") int population) {
-		List<City> cityList = infoService.findCityByCodeAndPopulation(ctCode, population);
+		List<User> cityList = infoService.findCityByCodeAndPopulation(ctCode, population);
 		return cityList;
 	}
 	

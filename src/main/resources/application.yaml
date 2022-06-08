@@ -3,7 +3,7 @@ server :
 
 spring:
   datasource:
-    url: jdbc:mariadb://192.168.56.1:3306/world
+    url: jdbc:mariadb://10.1.4.106:3306/recipe_recommendation
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: 1234
+    password: qwer
