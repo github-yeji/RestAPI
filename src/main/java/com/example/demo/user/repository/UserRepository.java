@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import com.example.demo.user.model.User;
 import lombok.extern.slf4j.Slf4j;
-import com.example.demo.user.repository.UserSql;
+import com.example.demo.Sql;
 
 @Slf4j
 @Repository
@@ -23,12 +23,12 @@ public class UserRepository {
 	}
 
 	public List<User> findList() {
-		return namedParameterJdbcTemplate.query(UserSql.SELECT, EmptySqlParameterSource.INSTANCE, this.userRowMapper);
+		return namedParameterJdbcTemplate.query(Sql.SELECT, EmptySqlParameterSource.INSTANCE, this.userRowMapper);
 	}
 
 	public List<User> findByCountryCodeAndPopulation(String countryCode, int population){
 		
-		String qry = UserSql.SELECT+ UserSql.COUNTRY_CODE_CONDITION+ UserSql.POPULATION_CONDITION;
+		String qry = Sql.SELECT+ Sql.COUNTRY_CODE_CONDITION+ Sql.POPULATION_CONDITION;
 
 		SqlParameterSource param = new MapSqlParameterSource("countryCode", countryCode)
 				.addValue("population", population);

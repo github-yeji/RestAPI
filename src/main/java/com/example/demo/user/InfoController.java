@@ -55,7 +55,7 @@ public class InfoController {
 	}
 
 	@GetMapping("/userList")
-	public Object cityList() {
+	public Object userList() {
 		List<User> userList = infoService.getUserList();
 		return userList;
 	}
