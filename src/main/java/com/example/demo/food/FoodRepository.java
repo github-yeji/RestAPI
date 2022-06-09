@@ -29,13 +29,12 @@ public class FoodRepository {
 
 	public Food findfood(Food food) {
 		
-		
-		SqlParameterSource parameterSource = new MapSqlParameterSource("cdNm", food.getCdNm());
+		SqlParameterSource parameterSource = new MapSqlParameterSource("cdNm", food.getCdNm())
+				.addValue("refriUserSeq", food.getRefriUserSeq());
 		food = namedParameterJdbcTemplate.queryForObject(Sql.FINDFOOD, parameterSource, foodRowMapper);
 
 		return food;
 	}
-
 
 	
 }

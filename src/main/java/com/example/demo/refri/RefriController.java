@@ -30,7 +30,7 @@ public class RefriController {
 		return userRefri;
 	}
 	
-	@GetMapping("/clearfood")
+	@PostMapping("/clearfood")
 	public ResponseEntity<String> refriclear(@RequestBody UserRefri userRefri) {
 		try {
 			Integer deletedCnt =refriService.clearRefri(userRefri);
@@ -42,21 +42,18 @@ public class RefriController {
 	}
 	
 	@PostMapping("/refriUpdate")
-	public ResponseEntity<UserRefri> refriAdd(@RequestBody UserRefri userRefri) {
+	public ResponseEntity<UserRefri> refriAdd(@RequestBody Food food) {
 		try {
-//			UserRefri userRefri = new UserRefri();
-//			
-//			
-//			
-//			
-//			refriService.findFood(food);
-//			
-//			System.out.println("해당 식재료 찾기 완료 >>" + food);
-//			userRefri.setRefriUserSeq(food.getRefriUserSeq());
-//			System.out.println("RefriUserSeq >> " +userRefri.getRefriUserSeq());
-//			userRefri.setFoodCode(food.getCdId());
-//			System.out.println("FoodCode >> " +userRefri.getFoodCode());
-//			
+			
+			UserRefri userRefri = new UserRefri();
+			
+			food=refriService.findFood(food);
+			System.out.println("해당 식재료 찾기 완료");
+			userRefri.setRefriUserSeq(food.getRefriUserSeq());
+			System.out.println("RefriUserSeq >> " +userRefri.getRefriUserSeq());
+			userRefri.setFoodCode(food.getCdId());
+			System.out.println("FoodCode >> " +userRefri.getFoodCode());
+
 			
 			refriService.clearRefri(userRefri);
 			System.out.println("식재료 클리어 완료");

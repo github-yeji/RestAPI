@@ -47,6 +47,7 @@ public class RefriRepository {
 	
 	public UserRefri insert(UserRefri userRefri) {
 		System.out.println("냉장고 식재료 추가 = " + Sql.INSERT);
+		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		SqlParameterSource parameterSource = new MapSqlParameterSource("refriUserSeq", userRefri.getRefriUserSeq())
 				.addValue("foodCode", userRefri.getFoodCode());
