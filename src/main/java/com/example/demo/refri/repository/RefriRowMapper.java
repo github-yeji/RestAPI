@@ -13,9 +13,9 @@ public class RefriRowMapper implements RowMapper<UserRefri>{
 	public UserRefri mapRow(ResultSet rs, int rowNum) throws SQLException {
 		UserRefri userRefri = new UserRefri();
 		userRefri.setRefriUserSeq(rs.getInt("refri_user_seq"));
-		userRefri.setFoodNm(rs.getString("cd_nm"));
-		userRefri.setRefriFoodCpcty(rs.getInt("irdnt_cpcty"));
 		userRefri.setFoodCode(rs.getInt("irdnt_code"));
+		userRefri.setRefriFoodCpcty(rs.getInt("irdnt_cpcty"));
+		userRefri.setFoodNm(rs.getString("cd_nm"));
 		return userRefri;
 	}
 

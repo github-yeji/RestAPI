@@ -23,7 +23,7 @@ class Sql{
 	""";
 	
 	public static final String FINDFOOD = """
-				SELECT cd_id, cd_nm, refri_user_seq FROM tb_irdnt_cd_grp, tb_refrigerator WHERE cd_nm=:cdNm AND refri_user_seq=:refriUserSeq
+				SELECT DISTINCT refri_user_seq, cd_id, cd_nm FROM tb_irdnt_cd_grp, tb_refrigerator WHERE cd_nm=:cdNm AND refri_user_seq=:refriUserSeq
 	""";
 
 	public static final String REFRICLEAR = """
