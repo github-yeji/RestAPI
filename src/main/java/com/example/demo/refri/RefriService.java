@@ -23,16 +23,16 @@ public class RefriService {
 		return this.refriRepository.findUserRefrigerator();
 	}
 
-	public Food findFood(Food food){
-		return this.foodRepository.findfood(food);
+	public List<Food> findFood(List<Food> foods){
+		return this.foodRepository.findfood(foods);
 	}
 
-	public Integer clearRefri(UserRefri userRefri) {
-		return this.refriRepository.clear(userRefri);
+	public Integer clearRefri(Integer refriUserSeq) {
+		return this.refriRepository.clear(refriUserSeq);
 	}
 	
-	public UserRefri insert(UserRefri userRefri) {
-		return this.refriRepository.insert(userRefri);
+	public List<UserRefri> insert(List<UserRefri> userRefris) {
+		return this.refriRepository.insert(userRefris);
 	}
 
 	

@@ -1,5 +1,7 @@
 package com.example.demo.refri;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,39 +32,40 @@ public class RefriController {
 		return userRefri;
 	}
 	
-	@GetMapping("/clearfood")
-	public ResponseEntity<String> refriclear(@RequestBody UserRefri userRefri) {
-		try {
-			Integer deletedCnt =refriService.clearRefri(userRefri);
-			return new ResponseEntity<>(String.format("%d deleted", deletedCnt), HttpStatus.OK);
-		}catch (Exception e) {
-			System.out.println("refriclear Error!!!!!!!!! " +e.toString());
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
+//	@PostMapping("/clearfood")
+//	public ResponseEntity<String> refriclear(@RequestBody UserRefri userRefri) {
+//		try {
+//			Integer deletedCnt =refriService.clearRefri(userRefri);
+//			return new ResponseEntity<>(String.format("%d deleted", deletedCnt), HttpStatus.OK);
+//		}catch (Exception e) {
+//			System.out.println("refriclear Error!!!!!!!!! " +e.toString());
+//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+//	
+
 	@PostMapping("/refriUpdate")
-	public ResponseEntity<UserRefri> refriAdd(@RequestBody UserRefri userRefri) {
+	public ResponseEntity<List<UserRefri>> refriAdd(@RequestBody List<Food> foods) {
 		try {
-//			UserRefri userRefri = new UserRefri();
-//			
-//			
-//			
-//			
-//			refriService.findFood(food);
-//			
-//			System.out.println("해당 식재료 찾기 완료 >>" + food);
-//			userRefri.setRefriUserSeq(food.getRefriUserSeq());
-//			System.out.println("RefriUserSeq >> " +userRefri.getRefriUserSeq());
-//			userRefri.setFoodCode(food.getCdId());
-//			System.out.println("FoodCode >> " +userRefri.getFoodCode());
-//			
+			List<UserRefri> adds = new ArrayList<UserRefri>(1);
 			
-			refriService.clearRefri(userRefri);
+			List<Food> finded = refriService.findFood(foods);
+			System.out.println("해당 식재료 찾기 완료");
+			
+			refriService.clearRefri(finded.get(0).getRefriUserSeq());
 			System.out.println("식재료 클리어 완료");
 			
+			for(Food food : finded) {
+				UserRefri userRefri= new UserRefri();
+				userRefri.setRefriUserSeq(food.getRefriUserSeq());
+				userRefri.setFoodCode(food.getCdId());
+				System.out.println("RefriUserSeq >> " + userRefri.getRefriUserSeq());
+				System.out.println("FoodCode >> " + userRefri.getFoodCode());
+				adds.add(userRefri);
+			}
+
 			
-			return new ResponseEntity<>(refriService.insert(userRefri), HttpStatus.OK);
+			return new ResponseEntity<>(refriService.insert(adds), HttpStatus.OK);
 		}catch (Exception e) {
 			System.out.println("refriAdd Error!!!!!!!!! " +e.toString());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

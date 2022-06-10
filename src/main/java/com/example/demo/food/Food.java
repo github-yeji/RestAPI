@@ -5,6 +5,12 @@ public class Food {
 	private Integer cdId;
 	private String cdNm;
 	
+	public String getCdNm() {
+		return cdNm;
+	}
+	public void setCdNm(String cdNm) {
+		this.cdNm = cdNm;
+	}
 	public Integer getRefriUserSeq() {
 		return RefriUserSeq;
 	}
@@ -16,12 +22,6 @@ public class Food {
 	}
 	public void setCdId(Integer cdId) {
 		this.cdId = cdId;
-	}
-	public String getCdNm() {
-		return cdNm;
-	}
-	public void setCdNm(String cdNm) {
-		this.cdNm = cdNm;
 	}
 
 	
