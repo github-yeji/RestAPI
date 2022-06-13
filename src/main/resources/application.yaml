@@ -2,8 +2,24 @@ server :
   port: 8087
 
 spring:
+  profiles:
+    include: jwt
   datasource:
-    url: jdbc:mariadb://10.1.4.106:3306/recipe_recommendation
+    url: jdbc:mariadb://10.1.4.106:3306/test
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: qwer
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
+
+logging:
+  level:
+    org.hibernate:
+      type.descriptor.sql: trace #show parameter binding
+      SQL: DEBUG
