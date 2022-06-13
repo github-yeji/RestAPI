@@ -12,16 +12,16 @@ public class User {
 	private Integer user_seq;//회원관리번호
 	private String user_nm;//회원이름
 	private String user_email;//회원아이디
-	private String user_password;
+	private String user_pwd;
 	private String user_sex;//회원성별
 	private Integer user_age;//회원나이
 	
 
-	public String getUser_password() {
-		return user_password;
+	public String getUser_pwd() {
+		return user_pwd;
 	}
-	public void setUser_password(String user_password) {
-		this.user_password = user_password;
+	public void setUser_pwd(String user_pwd) {
+		this.user_pwd = user_pwd;
 	}
 	public Integer getUser_seq() {
 		return user_seq;

@@ -25,6 +25,14 @@ public class UserService {
 		return this.userRepository.findList();
 	}
 	
+//	public List<User> findByUserLogin(String user_email, String user_pwd) {
+//		return this.userRepository.findByUserLogin(user_email, user_pwd);
+//	}
+	
+	public User findByUserLogin(User user) {
+		return this.userRepository.findByUserLogin(user);
+	}
+
 
 	public User insert(User user) {
 		return this.userRepository.insert(user);

@@ -30,6 +30,17 @@ class Sql{
 		SELECT user_seq, user_email, user_nm, user_sex, user_age FROM tb_user
 	""";
 	
+	public static final String USERLOGIN = """
+		SELECT user_seq, user_email, user_nm, user_sex, user_age, user_pwd FROM tb_user WHERE
+	""";
+	
+	public static final String USER_EMAIL = """
+		user_email = :user_email
+	""";
+	public static final String USER_PASSWORD = """
+		AND user_pwd = :user_pwd
+	""";
+	
 	public static final String USERINSERT = """
 		INSERT INTO tb_user ( user_nm, user_email,user_pwd ,user_sex, user_age) values(:user_nm, :user_email,:user_password ,:user_sex,:user_age)
 	""";
