@@ -38,6 +38,9 @@ dependencies {
 	implementation('ch.qos.logback:logback-classic')
 	implementation('org.codehaus.groovy:groovy')
 	
+	//Message Converter  (json)
+	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.13.3'
+
 }
 
 tasks.named('test') {
