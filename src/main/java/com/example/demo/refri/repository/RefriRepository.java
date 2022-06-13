@@ -55,10 +55,10 @@ public class RefriRepository {
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		for(UserRefri userRefri : userRefris) {
-			System.out.println("냉장고 식재료 추가 = " + Sql.INSERT);
+			System.out.println("냉장고 식재료 추가 = " + Sql.REFRIINSERT);
 			SqlParameterSource parameterSource = new MapSqlParameterSource("refriUserSeq", userRefri.getRefriUserSeq())
 					.addValue("foodCode", userRefri.getFoodCode());
-			namedParameterJdbcTemplate.update(Sql.INSERT, parameterSource, keyHolder);
+			namedParameterJdbcTemplate.update(Sql.REFRIINSERT, parameterSource, keyHolder);
 			userRefri.setRefriUserSeq(keyHolder.getKey().intValue());
 			added.add(userRefri);
 		}

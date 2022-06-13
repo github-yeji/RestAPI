@@ -1,19 +1,9 @@
 package com.example.demo
 
 class Sql{
-	//public static final String SELECT = "SELECT ID, Name, CountryCode, District, Population FROM city LIMIT 1000;";
-	public static final String SELECT = """
-		SELECT user_seq, user_email, user_nm, user_sex, user_age FROM tb_user
-	""";
-
-	public static final String COUNTRY_CODE_CONDITION = """
-		AND countryCode = :countryCode
-	""";
-
-	public static final String POPULATION_CONDITION = """
-		AND population >= :population
-	""";
 	
+	
+	//REFRI -----------------------------------------------------------------------------------------------------------
 	public static final String REFRISELECT = """
 				SELECT refri_user_seq, cd_nm, irdnt_cpcty, irdnt_code
 				FROM tb_refrigerator
@@ -30,12 +20,28 @@ class Sql{
 				DELETE FROM tb_refrigerator WHERE refri_user_seq=:refriUserSeq
 	""";
 	
-//	public static final String INSERT = """
-//				INSERT INTO tb_refrigerator(refri_user_seq, irdnt_code, irdnt_cpcty, irdnt_grp_code) VALUES(:refriUserSeq, :foodCode, :refriFoodCpcty, 100)
-//	""";
-	
-	public static final String INSERT = """
+	public static final String REFRIINSERT = """
 				INSERT INTO tb_refrigerator(refri_user_seq, irdnt_code, irdnt_grp_code) VALUES(:refriUserSeq, :foodCode, 100)
 	""";
+	
+	//USER -----------------------------------------------------------------------------------------------------------
+	
+	public static final String USERSELECT = """
+		SELECT user_seq, user_email, user_nm, user_sex, user_age FROM tb_user
+	""";
+	
+	public static final String USERINSERT = """
+		INSERT INTO tb_user ( user_nm, user_email,user_pwd ,user_sex, user_age) values(:user_nm, :user_email,:user_password ,:user_sex,:user_age)
+	""";
+	
+	public static final String USERUPDATE="""
+			UPDATE tb_user SET user_nm = :user_nm, user_email=:user_email, user_pwd=:user_password,user_sex=:user_sex,user_age=:user_age WHERE 1=1
+		""";
+	public static final String ID_CONDITION = """
+			AND user_email = :user_email
+		""";
+	public static final String USERDELETE = """
+		DELETE FROM tb_user WHERE 1=1  
+		""";
 	
 }
