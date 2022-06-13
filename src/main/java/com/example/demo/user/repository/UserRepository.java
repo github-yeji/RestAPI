@@ -2,6 +2,8 @@ package com.example.demo.user.repository;
 
 import java.util.List;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -27,12 +29,35 @@ public class UserRepository {
 	public List<User> findList() {
 		return namedParameterJdbcTemplate.query(Sql.USERSELECT, EmptySqlParameterSource.INSTANCE, this.userRowMapper);
 	}
+	
+	public User findByUserLogin(User user){
+		
+		SqlParameterSource param = new MapSqlParameterSource("user_email", user.getUser_email())
+				.addValue("user_pwd", user.getUser_pwd());
+		
+		return namedParameterJdbcTemplate.queryForObject(Sql.USERLOGIN
+				+ Sql.USER_EMAIL
+				+ Sql.USER_PASSWORD, param, this.userRowMapper);
+
+	}
+	
+//	public List<User> findByUserLogin(String user_email, String user_pwd){
+//		SqlParameterSource param = new MapSqlParameterSource("user_email", user_email)
+//				.addValue("user_pwd", user_pwd);
+//		
+//		List<User> user = namedParameterJdbcTemplate.query(Sql.USERLOGIN
+//				+ Sql.USER_EMAIL
+//				+ Sql.USER_PASSWORD, param, this.userRowMapper);
+//		System.out.println(user_email+ user_pwd+ user);
+//		
+//		return user;
+//	}
 
 	public User insert(User user) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		SqlParameterSource parameterSource = new MapSqlParameterSource("user_nm", user.getUser_nm())
 				.addValue("user_email", user.getUser_email())
-				.addValue("user_password", user.getUser_password())
+				.addValue("user_pwd", user.getUser_pwd())
 				.addValue("user_sex", user.getUser_sex())
 				.addValue("user_age", user.getUser_age()); 
 		int affectedRows = namedParameterJdbcTemplate.update(Sql.USERINSERT, parameterSource, keyHolder);
@@ -44,7 +69,7 @@ public class UserRepository {
 		
 		SqlParameterSource parameterSource = new MapSqlParameterSource("user_nm", user.getUser_nm())
 				.addValue("user_email", user.getUser_email())
-				.addValue("user_password", user.getUser_password())
+				.addValue("user_pwd", user.getUser_pwd())
 				.addValue("user_sex", user.getUser_sex())
 				.addValue("user_age", user.getUser_age()); 
 		return namedParameterJdbcTemplate.update(qry, parameterSource);

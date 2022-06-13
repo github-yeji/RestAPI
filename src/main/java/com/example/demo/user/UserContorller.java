@@ -28,6 +28,24 @@ public class UserContorller {
 		return userService.getAllUsers();
 	}
 	
+//	@GetMapping("/login")
+//	public Object MemberLogin(@RequestParam(value="user_email",required=false) String user_email
+//			, @RequestParam(value="user_pwd",required=false) String user_pwd) {
+//		System.out.println("------login------");
+//		
+//		List<User> user = userService.findByUserLogin(user_email, user_pwd);
+//		return user;
+//	}
+	
+	@GetMapping("/login")
+	public ResponseEntity<String> MemberLogin(@RequestBody User user) {
+		try {
+			userService.findByUserLogin(user);
+			return new ResponseEntity<>(String.format("로그인 성공"), HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(String.format("로그인 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@PostMapping("/join")
 	public ResponseEntity<User> MemberAdd(@RequestBody User user) {
@@ -58,5 +76,4 @@ public class UserContorller {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
 }
