@@ -40,11 +40,8 @@ public class FoodRepository {
 		for(Food food : foods) {
 			SqlParameterSource parameterSource = new MapSqlParameterSource("cdNm", food.getCdNm())
 					.addValue("refriUserSeq", food.getRefriUserSeq());
-			try {
-				food = namedParameterJdbcTemplate.queryForObject(Sql.FINDFOOD, parameterSource, foodRowMapper);
-			}catch(EmptyResultDataAccessException e) {
-				return null;
-			}
+			food = namedParameterJdbcTemplate.queryForObject(Sql.FINDFOOD, parameterSource, foodRowMapper);
+			
 			finded.add(food);
 		}
 		return finded;
