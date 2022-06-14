@@ -23,9 +23,9 @@ public class UserContorller {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/Allusers")
-	public List<User>getAllUsers(){
-		return userService.getAllUsers();
+	@GetMapping("/userInfo")
+	public User getUserInfo(@RequestBody User user){
+		return userService.getUserInfo(user);
 	}
 	
 //	@GetMapping("/login")

@@ -26,8 +26,9 @@ public class UserRepository {
 		this.userRowMapper = new UserRowMapper();
 	}
 
-	public List<User> findList() {
-		return namedParameterJdbcTemplate.query(Sql.USERSELECT, EmptySqlParameterSource.INSTANCE, this.userRowMapper);
+	public User findUserInfo(User user) {
+		SqlParameterSource param = new MapSqlParameterSource("user_seq", user.getUser_seq());
+		return namedParameterJdbcTemplate.queryForObject(Sql.USERSELECT, param, this.userRowMapper);
 	}
 	
 	public User findByUserLogin(User user){

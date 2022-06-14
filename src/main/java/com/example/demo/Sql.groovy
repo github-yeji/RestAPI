@@ -27,7 +27,7 @@ class Sql{
 	//USER -----------------------------------------------------------------------------------------------------------
 	
 	public static final String USERSELECT = """
-		SELECT user_seq, user_pwd, user_email, user_nm, user_sex, user_age FROM tb_user
+		SELECT user_seq, user_pwd, user_email, user_nm, user_sex, user_age FROM tb_user WHERE user_seq=:user_seq
 	""";
 	
 	public static final String USERLOGIN = """
