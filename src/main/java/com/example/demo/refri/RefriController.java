@@ -46,7 +46,7 @@ public class RefriController {
 	
 
 	@PostMapping("/refriUpdate")
-	public ResponseEntity<List<UserRefri>> refriAdd(@RequestParam(value = "foods", required=false) List<Food> foods) {
+	public ResponseEntity<List<UserRefri>> refriAdd(@RequestBody List<Food> foods) {
 		try {
 			List<UserRefri> adds = new ArrayList<UserRefri>(1);
 			

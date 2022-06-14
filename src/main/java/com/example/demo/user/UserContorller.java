@@ -23,9 +23,9 @@ public class UserContorller {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/Allusers")
-	public List<User>getAllUsers(){
-		return userService.getAllUsers();
+	@GetMapping("/userInfo")
+	public User getUserInfo(@RequestBody User user){
+		return userService.getUserInfo(user);
 	}
 	
 //	@GetMapping("/login")
@@ -48,11 +48,13 @@ public class UserContorller {
 	}
 	
 	@PostMapping("/join")
-	public ResponseEntity<User> MemberAdd(@RequestBody User user) {
+	public ResponseEntity<String> MemberAdd(@RequestBody User user) {
 		try {
-			return new ResponseEntity<>(userService.insert(user), HttpStatus.OK);
+			userService.insert(user);
+			return new ResponseEntity<>(String.format("회원가입에 성공하셨습니다."), HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(String.format("이미 가입된 이메일입니다."), HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
 	}
 	
