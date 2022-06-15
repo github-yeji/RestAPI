@@ -34,11 +34,14 @@ public class UserRepository {
 		
 		SqlParameterSource param = new MapSqlParameterSource("user_email", user.getUser_email())
 				.addValue("user_pwd", user.getUser_pwd());
-		
-		return namedParameterJdbcTemplate.queryForObject(Sql.USERLOGIN
+		try {
+			return namedParameterJdbcTemplate.queryForObject(Sql.USERLOGIN
 				+ Sql.USER_EMAIL
 				+ Sql.USER_PASSWORD, param, this.userRowMapper);
-
+		}catch (IncorrectResultSizeDataAccessException error) { // 쿼리문에 해당하는 결과가 없거나 2개 이상일 때
+		    return null;
+		}
+		
 	}
 	
 	public List<User> findByUserPage(String user_email, String user_pwd){

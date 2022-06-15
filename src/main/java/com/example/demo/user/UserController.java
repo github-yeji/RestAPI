@@ -1,6 +1,9 @@
 package com.example.demo.user;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.refri.model.UserRefri;
 import com.example.demo.user.model.User;
 
 @RestController
@@ -36,13 +40,15 @@ public class UserController {
 		return user;
 	}
 	
-	@GetMapping("/login")
-	public ResponseEntity<String> MemberLogin(@RequestBody User user) {
+	@PostMapping("/login")
+	public ResponseEntity<User> MemberLogin(@RequestBody User user) {
 		try {
-			userService.findByUserLogin(user);
-			return new ResponseEntity<>(String.format("로그인 성공"), HttpStatus.OK);
+			User result = userService.findByUserLogin(user);
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<>(String.format("로그인 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

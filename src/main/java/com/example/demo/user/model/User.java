@@ -18,7 +18,6 @@ public class User {
 	private String user_pwd;
 	private String user_sex;//회원성별
 	private Integer user_age;//회원나이
-	
 
 	@Override
 	public String toString() {
@@ -61,5 +60,6 @@ public class User {
 	public void setUser_age(Integer user_age) {
 		this.user_age = user_age;
 	}
+
 	
 }
