@@ -1,7 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%--
 <%@ page import="jsp.member.model.MemberBean" %> 
-<%@ page import="jsp.member.model.MemberDAO" %>
+<%@ page import="jsp.member.model.MemberDAO" %> --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <html>
 <head>
 <meta charset="EUC-KR">
@@ -71,19 +75,19 @@
  	%>
  	
  	<%-- 자바빈 관련 액션태그 사용 --%>    
- 	<jsp:useBean id="memberBean" class="jsp.member.model.MemberBean"/>
- 	<jsp:setProperty property="*" name="memberBean"/>
+<%--  	<jsp:useBean id="memberBean" class="jsp.member.model.MemberBean"/>
+ 	<jsp:setProperty property="*" name="memberBean"/> --%>
  	
- 	<%
+ 	<%/* 
  		MemberDAO dao = MemberDAO.getInstance();
- 		dao.insertMember(memberBean);
+ 		dao.insertMember(memberBean); */
  	%>
  	
 	<div id="wrap">
 		<br>        
 			<font style="font-size:50px; color:#1C79E8; font-weight:bold;margin-left:150px;" >나의 정보 </font>			
 		<br>
-			<font style="font-size:20px; color:black; margin-left:200px;" ><%=memberBean.getName()%>님 가입을 축하드립니다.</font>
+	<%-- 	 	<font style="font-size:20px; color:black; margin-left:200px;" ><%=memberBean.getName()%>님 가입을 축하드립니다.</font>  --%>
 			<br>
 			<font style="font-size:20px; color:black; margin-left:200px;" >고객님께서 가입하신 BabJo 회원 정보입니다.</font>
 			<br>
@@ -91,7 +95,8 @@
 		<br>
 		 
 		 <table>
-				<tr>
+		 <form action="" method="get">
+ 				<tr>
 					<td id="title">이메일</td>
 					<td><%=memberBean.getId() %></td>
 				</tr>
@@ -112,7 +117,8 @@
 					<td id="title">성별</td>
 					<td><%=memberBean.getGender() %></td>
 				</tr>
-			</table>           
+				</form>
+			</table>       
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </div>
 </body>

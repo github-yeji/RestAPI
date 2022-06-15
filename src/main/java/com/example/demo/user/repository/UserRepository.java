@@ -26,9 +26,8 @@ public class UserRepository {
 		this.userRowMapper = new UserRowMapper();
 	}
 
-	public User findUserInfo(User user) {
-		SqlParameterSource param = new MapSqlParameterSource("user_seq", user.getUser_seq());
-		return namedParameterJdbcTemplate.queryForObject(Sql.USERSELECT, param, this.userRowMapper);
+	public List<User> findList() {
+		return namedParameterJdbcTemplate.query(Sql.USERSELECT, EmptySqlParameterSource.INSTANCE, this.userRowMapper);
 	}
 	
 	public User findByUserLogin(User user){
@@ -42,17 +41,17 @@ public class UserRepository {
 
 	}
 	
-//	public List<User> findByUserLogin(String user_email, String user_pwd){
-//		SqlParameterSource param = new MapSqlParameterSource("user_email", user_email)
-//				.addValue("user_pwd", user_pwd);
-//		
-//		List<User> user = namedParameterJdbcTemplate.query(Sql.USERLOGIN
-//				+ Sql.USER_EMAIL
-//				+ Sql.USER_PASSWORD, param, this.userRowMapper);
-//		System.out.println(user_email+ user_pwd+ user);
-//		
-//		return user;
-//	}
+	public List<User> findByUserPage(String user_email, String user_pwd){
+		SqlParameterSource param = new MapSqlParameterSource("user_email", user_email)
+				.addValue("user_pwd", user_pwd);
+		
+		List<User> user = namedParameterJdbcTemplate.query(Sql.USERLOGIN
+				+ Sql.USER_EMAIL
+				+ Sql.USER_PASSWORD, param, this.userRowMapper);
+		System.out.println(user_email+ user_pwd+ user);
+		
+		return user;
+	}//마이페이지 추가부분
 
 	public User insert(User user) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();

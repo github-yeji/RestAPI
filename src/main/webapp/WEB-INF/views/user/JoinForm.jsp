@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<meta charset="UTF-8">
 <html>
 <head>
 	<title>BabJo Join</title>
@@ -32,20 +42,23 @@
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 	<script type="text/javascript">
+	
 		function checkValue()
 		{
-			if(!document.userInfo.id.value){
+			if(!document.userInfo.user_email.value){
 				alert("아이디를 입력하세요.");
 				return flase;
 			}
-			if(!document.userInfo.password.value){
+			if(!document.userInfo.user_pwd.value){
 				alert("비밀번호를 입력하세요.");
 				return flase;
 			}
-			if(!document.userInfo.password.value != document.userInfo.passwordcheck.value){
+			/* if(!document.userInfo.user_pwd.value != document.userInfo.passwordcheck.value){
 				alert("비밀번호를 동일하게 입력하세요.");
 				return flase;
-			}
+			} */
+			document.userInfo.action = '<c:url value="/users/join"/>';
+			document.userInfo.submit();
 		}
 	</script>
 </head>
@@ -91,13 +104,13 @@
 		<c><font style="font:itlaic bold; color:black; font-size:20px;">회원가입에 필요한 정보들을 정확히 입력해주세요.</font></c>
 		<br>
 		
-		<form method="post" action="WebContent/member/view/Mypage.jsp" name="userInfo" nsubmit="return checkValue()">
-    
+ <form method="post" action="/WEB-INF/views/board/Mypage.jsp" id="userInfo" name="userInfo" submit="return checkValue()">
+     <!-- <form action="checkValue()" method="post" id="join"> -->
 			<table>
 				<tr>
 					<td id="title">이메일</td>
 					<td>                        
-						<input type="text" name="id" maxlength="20">
+						<input type="text" id="user_email" name="user_email" maxlength="20">
 						<input type="button" value="중복확인" >
 					</td>
 				</tr>
@@ -105,7 +118,7 @@
 				<tr>
 					<td id="title">비밀번호</td>
 					<td>                        
-						<input type="password" name="password" maxlength="64">                    
+						<input type="password" id="user_pwd"name="user_pwd" maxlength="64">                    
 					</td>
 				</tr>
 				
@@ -120,7 +133,7 @@
 				
 					<td id="title">이름</td>
 						<td>                        
-							<input type="text" name="name" maxlength="16">                    
+							<input type="text" id="user_nm"name="user_nm" maxlength="16">                    
 						</td>
 				</tr>
 				
@@ -128,7 +141,7 @@
 				
 					<td id="title">나이</td>
 						<td>                        
-							<input type="text" name="age" maxlength="3">                    
+							<input type="text" id="user_age"name="user_age" maxlength="3">                    
 						</td>
 				</tr>
 				
@@ -136,13 +149,14 @@
 				
 					<td id="title">성별</td>
 						<td>                        
-						<input type="radio" name="gender" value="남" checked>남                        
-						<input type="radio" name="gender" value="여" checked>여                    
+						<input type="radio" id="user_sex" name="user_sex" value="M" checked>남                        
+						<input type="radio" id="user_sex"name="user_sex" value="F" checked>여                    
 						</td>
+						
 				</tr>
 			</table>           
 			<br>            
-			<button class="w-70 btn btn-lg btn-primary" type="submit">회원가입 완료</button>        
+			<button class="w-70 btn btn-lg btn-primary" type="submit" onclick="checkValue()">회원가입 완료</button>        
 		</form>    
 	</div>
 </body>

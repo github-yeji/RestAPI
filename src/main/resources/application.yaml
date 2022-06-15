@@ -1,9 +1,21 @@
-server :
+server:
   port: 8087
 
 spring:
   datasource:
-    url: jdbc:mariadb://10.1.4.106:3306/recipe_recommendation
+    url: jdbc:mariadb://10.1.4.106:3306/recipe_recommendation?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: qwer
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true

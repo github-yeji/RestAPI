@@ -21,13 +21,13 @@ public class UserService {
 		 this.userRepository = userRepository;
 	}
 	
-	public User getUserInfo(User user){
-		return this.userRepository.findUserInfo(user);
+	public List<User>getAllUsers(){
+		return this.userRepository.findList();
 	}
 	
-//	public List<User> findByUserLogin(String user_email, String user_pwd) {
-//		return this.userRepository.findByUserLogin(user_email, user_pwd);
-//	}
+	public List<User> findByUserPage(String user_email, String user_pwd) {
+		return this.userRepository.findByUserPage(user_email, user_pwd);
+	}//마이페이지 추가부분
 	
 	public User findByUserLogin(User user) {
 		return this.userRepository.findByUserLogin(user);

@@ -1,6 +1,8 @@
 package com.example.demo.user.model;
 
 
+import org.springframework.stereotype.Component;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,6 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Component
 public class User {
 	private Integer user_seq;//회원관리번호
 	private String user_nm;//회원이름
@@ -17,6 +20,11 @@ public class User {
 	private Integer user_age;//회원나이
 	
 
+	@Override
+	public String toString() {
+		return "User [user_seq=" + user_seq + ", user_nm=" + user_nm + ", user_email=" + user_email + ", user_pwd="
+				+ user_pwd + ", user_sex=" + user_sex + ", user_age=" + user_age + "]";
+	}
 	public String getUser_pwd() {
 		return user_pwd;
 	}

@@ -19,23 +19,22 @@ import com.example.demo.user.model.User;
 
 @RestController
 @RequestMapping("/users")
-public class UserContorller {
+public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/userInfo")
-	public User getUserInfo(@RequestBody User user){
-		return userService.getUserInfo(user);
+	@GetMapping("/Allusers")
+	public List<User>getAllUsers(){
+		return userService.getAllUsers();
 	}
 	
-//	@GetMapping("/login")
-//	public Object MemberLogin(@RequestParam(value="user_email",required=false) String user_email
-//			, @RequestParam(value="user_pwd",required=false) String user_pwd) {
-//		System.out.println("------login------");
-//		
-//		List<User> user = userService.findByUserLogin(user_email, user_pwd);
-//		return user;
-//	}
+	@GetMapping("/mypage")//마이페이지 추가부분
+	public Object MemberLogin(@RequestParam(value="user_email",required=false) String user_email
+			, @RequestParam(value="user_pwd",required=false) String user_pwd) {
+		
+		List<User> user = userService.findByUserPage(user_email, user_pwd);
+		return user;
+	}
 	
 	@GetMapping("/login")
 	public ResponseEntity<String> MemberLogin(@RequestBody User user) {
@@ -48,13 +47,14 @@ public class UserContorller {
 	}
 	
 	@PostMapping("/join")
-	public ResponseEntity<String> MemberAdd(@RequestBody User user) {
+	public ResponseEntity<User> MemberAdd(User user) {
 		try {
-			userService.insert(user);
-			return new ResponseEntity<>(String.format("회원가입에 성공하셨습니다."), HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<>(String.format("이미 가입된 이메일입니다."), HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println(user.toString()+"USER CONTROLLER");
 			
+			return new ResponseEntity<>(userService.insert(user), HttpStatus.OK);
+			
+		}catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
