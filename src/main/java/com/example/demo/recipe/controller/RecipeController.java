@@ -30,32 +30,53 @@ public class RecipeController {
     private RecipeService recipeService;
     
     //  레시피 목록 보기(해당 유저의 냉장고 상황상 만들수있는 전체 레시피)------------------------------------------------
+//    @GetMapping("/user/{user_seq}")
+//    public List<Recipe> getRecipeList(@PathVariable("user_seq") Integer user_seq ) throws Exception{
+//        
+//        List<Recipe> result = recipeService.getRecipeList(user_seq);
+//        System.out.println("유저 번호 ========================================  "+user_seq);
+//        System.out.println("유저 정보 : "+ result);
+//        
+//        List<Recipe> list = recipeService.getRecipeList(user_seq);
+//        
+//        //모델과 뷰
+////        ModelAndView mav = new ModelAndView();
+////        mav.setViewName("/board/list");  //뷰를 이것으로 설정
+////        mav.addObject("list", list); // 데이터 저장
+////        //return mav; //설정한 뷰로 list가 전달  된다
+//        
+//        return result;
+//    }
+    //  레시피 목록 보기2 (갈아엎기용)
     @GetMapping("/user/{user_seq}")
-    public List<Recipe> getRecipeList(@PathVariable("user_seq") Integer user_seq ) throws Exception{
-        List<Recipe> result = recipeService.getRecipeList(user_seq);
+    public List<Recipe> getRecipeList2(@PathVariable("user_seq") Integer user_seq, Recipe recipe ) throws Exception{
+        
+        List<Recipe> result = recipeService.getRecipeList2(recipe);
         System.out.println("유저 번호 ========================================  "+user_seq);
         System.out.println("유저 정보 : "+ result);
-        
-        List<Recipe> list = recipeService.getRecipeList(user_seq);
-        //모델과 뷰
-//        ModelAndView mav = new ModelAndView();
-//        mav.setViewName("");  //뷰를 이것으로 설정
-//        mav.addObject("list", list); // 데이터 저장
-//        //return mav; //설정한 뷰로 list가 전달  된다
         
         return result;
     }
     
-    // 레시피 상세 내용(+레시피 요리법)--------------------------------------------------------------------------
+//    // 레시피 상세 내용(+레시피 요리법)--------------------------------------------------------------------------
+//    @GetMapping("/{recipe_seq}")
+//    public List<Recipe> getRecipeDt(@PathVariable("recipe_seq") int recipe_seq ) throws Exception{
+//        List<Recipe> result = recipeService.getRecipeDt(recipe_seq);
+//        System.out.println("레시피 번호 ========================================  "+recipe_seq);
+//        System.out.println("레시피 정보 : "+ result);
+//        
+//        return result;
+//    }
+    
+    // 레시피 상세 내용2(+레시피 요리법)--------------------------------------------------------------------------
     @GetMapping("/{recipe_seq}")
-    public List<Recipe> getRecipeDt(@PathVariable("recipe_seq") int recipe_seq ) throws Exception{
+    public List<Recipe> getRecipeDt2(@PathVariable("recipe_seq") int recipe_seq ) throws Exception{
         List<Recipe> result = recipeService.getRecipeDt(recipe_seq);
         System.out.println("레시피 번호 ========================================  "+recipe_seq);
         System.out.println("레시피 정보 : "+ result);
         
         return result;
     }
-    
     
     // 레시피 작성--------------------------------------------------------------------------------------------
     @PostMapping("/write")
@@ -74,12 +95,21 @@ public class RecipeController {
     
     
     // 레시피 수정--------------------------------------------------------------------------------------------
-    @PutMapping("/modify/{recipe_seq}/{cooking_no}")
+    @PutMapping("/modify")
     public Recipe updateRecipe(@RequestBody Recipe recipe) throws Exception{
+        //테스트할 때 전부 입력해야됨...
+        int recipe_seq = recipe.getRecipe_seq();
+        System.out.println("수정할 글 번호 : "+recipe_seq);
+        System.out.println(recipe);
         recipeService.updateRecipe(recipe);
         return recipe;
     }
-    
+    // 레시피 수정2
+//    @PutMapping("/modify2/{recipe_seq}/{cooking_no}")
+//    public Recipe updateRecipe2(@RequestBody Recipe recipe) throws Exception{
+//        recipeService.updateRecipe(recipe);
+//        return recipe;
+//    }
     
     // 레시피 삭제 (use_yn값을 Y ->N 수정)------------------------------------------------------------------------
     @PutMapping(value="/delete/{recipe_seq}", headers ="Accept=application/json")

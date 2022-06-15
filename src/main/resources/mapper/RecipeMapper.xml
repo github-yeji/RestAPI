@@ -16,9 +16,28 @@
                            WHERE B.user_seq = #{user_seq}
                            ) E
         WHERE D.irdnt_code = E.IRDNT_CODE
-        GROUP BY D.recipe_seq
-        HAVING COUNT(D.irdnt_code)>=3
+
     </select>
+    
+    <!-- 레시피 목록 보기2 -->
+    <select id="getRecipeList2" parameterType="Integer" resultType="com.example.demo.recipe.domain.Recipe">
+        SELECT D.recipe_seq,
+               D.recipe_nm, 
+               D.recipe_sumry,
+               D.recipe_nation_nm,
+               E.user_seq
+        FROM tb_recipe D, (SELECT A.irdnt_code AS IRDNT_CODE,
+                                  B.user_seq
+                           FROM tb_refrigerator A
+                           INNER JOIN tb_user B ON A.refri_user_seq = B.user_seq AND B.use_yn = 'Y'
+                           INNER JOIN tb_irdnt_cd_grp C ON A.irdnt_grp_code = C.cd_grp_id AND A.irdnt_code = C.cd_id
+                           WHERE B.user_seq = #{user_seq}
+                           ) E
+        WHERE D.irdnt_code = E.IRDNT_CODE
+        GROUP BY D.recipe_seq;
+
+    </select>
+    
     
     <!-- 레시피 상세 내용 -->
     <select id="getRecipeDt" parameterType="int" resultType="com.example.demo.recipe.domain.Recipe">
@@ -45,11 +64,33 @@
         ORDER BY G.recipe_seq, F.cooking_no;
     </select>
     
+    <!-- 레시피 상세 내용2 -->
+    <select id="getRecipeDt2" parameterType="int" resultType="com.example.demo.recipe.domain.Recipe">
+        SELECT G.recipe_seq,
+               G.recipe_nm,
+               G.recipe_sumry,
+               G.recipe_nation_nm, 
+               F.cooking_no,
+               F.cooking_dc
+        FROM tb_cooking F, (SELECT D.recipe_seq, 
+                                    D.recipe_nm,
+                                    D.recipe_sumry,
+                                    D.recipe_nation_nm
+                            FROM tb_recipe D, (SELECT A.irdnt_code
+                                                    FROM tb_refrigerator A
+                                                        INNER JOIN tb_user B ON A.refri_user_seq = B.user_seq AND B.use_yn = 'Y'
+                                                        INNER JOIN tb_irdnt_cd_grp C ON A.irdnt_grp_code = C.cd_grp_id AND A.irdnt_code = C.cd_id
+                                                    ) E
+                            WHERE D.irdnt_code = E.irdnt_code
+                            GROUP BY D.recipe_seq
+                            HAVING D.recipe_seq = #{recipe_seq}
+                            ) AS G
+        WHERE F.recipe_seq = G.recipe_seq
+        ORDER BY G.recipe_seq, F.cooking_no;
+    </select>
+    
     <!-- 레시피 작성 -->
     <insert id="insertRecipe" parameterType="com.example.demo.recipe.domain.Recipe">
-        <selectKey resultType="int" keyProperty="recipe_seq" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
         INSERT 
             INTO tb_recipe 
                      (recipe_seq,
@@ -97,7 +138,7 @@
             a.recipe_sumry        = #{recipe_sumry},
             a.recipe_nation_nm    = #{recipe_nation_nm},
             a.irdnt_code          = #{irdnt_code},
-            a.recipe_cooking_time = #{recipe_cookin},
+            a.recipe_cooking_time = #{recipe_cooking_time},
             a.recipe_qnt          = #{recipe_qnt},
             a.recipe_calorie      = #{recipe_calorie},
             a.recipe_level        = #{recipe_level},
@@ -111,6 +152,28 @@
         AND   a.recipe_seq = #{recipe_seq}
         AND   b.cooking_no = #{cooking_no}
         AND   a.irdnt_code = #{irdnt_code};
+    </update>
+    
+    <!-- 레시피 수정2 -->
+    <update id="updateRecipe2" parameterType="com.example.demo.recipe.domain.Recipe">
+        UPDATE tb_recipe a, tb_cooking b
+        SET a.recipe_nm           = #{recipe_nm},
+            a.recipe_sumry        = #{recipe_sumry},
+            a.recipe_nation_nm    = #{recipe_nation_nm},
+            a.irdnt_code          = #{irdnt_code},
+            a.recipe_cooking_time = #{recipe_cooking_time},
+            a.recipe_qnt          = #{recipe_qnt},
+            a.recipe_calorie      = #{recipe_calorie},
+            a.recipe_level        = #{recipe_level},
+            a.recipe_img_url      = #{recipe_img_url},
+            a.amdr_id             = #{amdr_id},
+            a.amd_dt              = NOW(),
+            b.cooking_dc          = #{cooking_dc},
+            b.step_image_url      = #{step_image_url},
+            b.step_tip            = #{step_tip}
+        WHERE a.recipe_seq = b.recipe_seq
+        AND   a.recipe_seq = #{recipe_seq}
+        AND   b.cooking_no = #{cooking_no}
     </update>
     
     <!-- 레시피 삭제 -->
