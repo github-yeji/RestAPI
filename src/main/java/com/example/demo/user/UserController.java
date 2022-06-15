@@ -53,9 +53,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/join")
-	public ResponseEntity<User> MemberAdd(User user) {
+	public ResponseEntity<User> MemberAdd(@RequestBody User user) {
 		try {
-			System.out.println(user.toString()+"USER CONTROLLER");
 			
 			return new ResponseEntity<>(userService.insert(user), HttpStatus.OK);
 			

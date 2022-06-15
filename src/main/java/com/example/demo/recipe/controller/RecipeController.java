@@ -78,6 +78,16 @@ public class RecipeController {
         return result;
     }
     
+    //  레시피 재료(상세내용 쿼리 수정시 삭제)
+//    @GetMapping("/irdnt/{recipe_seq}")
+//    public List<Recipe> getIrdnt(@PathVariable("recipe_seq") int recipe_seq, Recipe recipe ) throws Exception{
+////        List<Recipe> result = recipeService.getIrdnt(recipe);
+//        System.out.println("레시피 번호 :"+recipe_seq);
+//        System.out.println("레시피 재료 정보 : "+ result);
+//        
+//        return result;
+//    }
+    
     // 레시피 작성--------------------------------------------------------------------------------------------
     @PostMapping("/write")
     public Recipe insertRecipe(@RequestBody Recipe recipe) throws Exception{

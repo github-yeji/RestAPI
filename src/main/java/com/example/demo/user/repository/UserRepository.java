@@ -62,8 +62,10 @@ public class UserRepository {
 				.addValue("user_email", user.getUser_email())
 				.addValue("user_pwd", user.getUser_pwd())
 				.addValue("user_sex", user.getUser_sex())
-				.addValue("user_age", user.getUser_age()); 
-		int affectedRows = namedParameterJdbcTemplate.update(Sql.USERINSERT, parameterSource, keyHolder);
+				.addValue("user_age", user.getUser_age());
+		
+		namedParameterJdbcTemplate.update(Sql.USERINSERT, parameterSource, keyHolder);
+		user.setUser_seq(keyHolder.getKey().intValue());
 		return user;
 	}
 	

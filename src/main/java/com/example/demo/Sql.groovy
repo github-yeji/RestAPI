@@ -42,7 +42,7 @@ class Sql{
 	""";
 	
 	public static final String USERINSERT = """
-		INSERT INTO tb_user ( user_nm, user_email,user_pwd ,user_sex, user_age) values(:user_nm, :user_email,:user_password ,:user_sex,:user_age)
+		INSERT INTO tb_user ( user_nm, user_email,user_pwd ,user_sex, user_age) values(:user_nm, :user_email,:user_pwd ,:user_sex,:user_age)
 	""";
 	
 	public static final String USERUPDATE="""

@@ -9,7 +9,7 @@
         <title>글 작성</title>
     </head>
     <body>
-    
+<input type="hidden" id="user_seq" name="user_seq" value="${user_seq}">
         <div id="root">
             <header>
                 <h1> 게시판</h1>
@@ -17,12 +17,12 @@
             <hr />
              
             <nav>
-              <p>홈 - 글 작성</p>
+              <p>홈 - 글 작성${user_seq}</p>
             </nav>
             <hr />
             
             <section id="container">
-                <form role="form" method="post" action="/board/write">
+                <form role="form" method="post" action="/board/writting">
                     <table>
                         <tbody>
                             <tr>
