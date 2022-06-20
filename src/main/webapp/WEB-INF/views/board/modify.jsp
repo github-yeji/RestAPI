@@ -1,46 +1,110 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib  prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>레시피 수정</title>
-<style>
-        #wrap{
-            width:1000px;
-            height:200px;
-            margin-left:auto;
-            margin-right:auto;
-            text-align:center;
-        }
-    
-        table{
-            margin-left:50px;
-            font-size:20px;
-            border:10;
-            
-        }
-    
-        td{
-            border:10;
-            height:40px;
-        }
-    
-        #title{
-            background-color:white
-        }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>레시피 수정</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/resources/css/styles.css" rel="stylesheet" /> <!-- style.css 위치, 메인 이미지 경로는 header.masthead를 검색하여 설정 -->
+    </head>
+    <style>
         body{
+            background:#F2F2F2;
+        }
+        img{
+            width:100%;
+            height:100%;
+            border-radius:10px;
+        }
+        #writeTb{
+            margin:0 auto;
+            width: 1750px;
+            text-align:left;
+            text-indent:1em;
+            border-top: 3px solid #BDBDBD;
+            border-bottom: 3px solid #BDBDBD;
+        }
+        th{
+            padding: 30px 0px 30px 0px;
+            font-size : 2em;
+            border-bottom: 3px solid #BDBDBD;
+        }
+        td{
+            padding: 20px 0px 20px 0px;
+            font-size : 1.5em;
+        }
+        .label1{
+            margin-left:250px;
+        }
+        #buttons{
             margin: 0 auto;
-            width: 1500px;
+            margin-top: 20px;
+            width:1750px;
+        }
+        button{
+            background:#585858; 
+            color:white; font-weight:bold;
+            border-radius:3px;
+            width: 100px;
+            height: 40px;
+        }
+        a{ 
+            text-decoration: none;
+            display:block;
+            color: black;
+        }
+        a:visited{
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+        a:focus{
+            text-decoration: none;
+        }
+        a:hover, a:active {
+            text-decoration: none;
+        }
+        input[type=text]{
+            width:600px;
+            font-size:20px;
+        }
+        input[type=radio]{
+            zoom: 2;
+        }
+        textarea{
+            resize:none;
+            width:600px;
+            height: 300px;
         }
     </style>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<script text="text/javascript">
+    <script>
+    function checkForm() {
+        var genreArray = new Array();
+        $('input:radio[name=recipe_level]:checked').each(function() {
+            genreArray.push(this.value);
+        });
+        $('input:radio[name=use_yn]:checked').each(function() {
+            genreArray.push(this.value);
+        });
+        $('input:radio[name=recipe_nation_nm]:checked').each(function() {
+            genreArray.push(this.value);
+        });
+    }
     $(document).ready(function(){
         var formObj = $("form[name='readForm']");
         
@@ -51,153 +115,136 @@
             formObj.submit();
             //history.back(-2);
         })
-        
-        //삭제
-        $(".delete_btn").on("click", function(){
-            formObj.attr("action", "/board/delete");
-            formObj.attr("method", "post");
-            formObj.submit();
-        })
-        
-        //취소
-        $(".cancel_btn").on("click", function(){
-            //location.href = "/board/detail/<c:out value='${user_seq}'/>/<c:out value='${recipe_seq}'/>";
-            //user_seq를 받아올 수 있으면 어떻게 될거 같은데...
-            history.back(-1);
-        })
-        
     })//document
-</script>
-
-</head>
-<body>
-<nav class="navbar navbar-expand-xl navbar-dark bg-white" aria-label="Sixth navbar example">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="intro.jsp" style="font-size:70px; font-weight:bold; color:#FFA500; margin-left:50px;">BabJo</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    </script>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="/board/intro"><p>Bab jo</p></a> <!-- 로고 이미지 부분 -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/board/intro">소개</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#refri">내 냉장고</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/board/list/${user_seq}">추천 레시피</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/mypage.do">마이페이지</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead" style="margin-bottom:30px;">
+            <div class="container">
+                <div class="masthead-subheading" style="text-shadow: 2px 1px 0 #6E6E6E;">Welcome To Our babjo!</div>
+                <div class="masthead-heading text-uppercase" style="text-shadow: 3px 2px 0 #6E6E6E;">오늘 뭐 먹지?</div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="/board/list/${user_seq}">추천 레시피</a> <!-- 클릭 시 해당페이지의 id가 #recipe인 부분으로 이동 -->
+            </div>
+        </header>
         
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarsExample06">
-        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
-          <li class="nav-item">
-            <a class="nav-link" href="intro.jsp" style="font-size:25px; font-weight:bold; color:#000000; margin-left: 100px;" >     소개</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Myref.jsp" style="font-size:25px; font-weight:bold; color:#000000; margin-left: 200px;">     내 냉장고</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Recipe.jsp" style="font-size:25px; font-weight:bold; color:#000000; margin-left: 200px;">     추천레시피</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Mypage.jsp" style="font-size:25px; font-weight:bold; color:#000000; margin-left: 200px;">     마이페이지</a>
-          </li>
-          
-        </ul>
-       
-      </div>
-    </div>
-  </nav>
-  
-<img src="/resources/images/2.jpg" width="1200" height="500" alt="home사진" style="margin-left:50px; margin-top:20px;"/><br>
-<img src="/resources/images/main.png" width="1200" height="500" alt="main사진" style="margin-left:50px;"/><br>
-<table>
-<section id="container">
-                <form role="form" method="post" action="/board/modify">
-                <input type="hidden" id="user_seq" name="user_seq" value="${user_seq}">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td> 유저 번호 : ${user_seq}</td>
-                            <tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_seq">레시피 번호&nbsp&nbsp&nbsp&nbsp</label><input type="text" id="recipe_seq" name="recipe_seq" placeholder="${recipe_seq}"/>
-                                </td>
-                            </tr>  
-                            <tr>
-                                <td>
-                                    <label for="cooking_no">요리 순서</label><input type="text" id="cooking_no" name="cooking_no"/>
-                                </td>
-                            </tr>   
-                            <tr>
-                                <td>
-                                    <label for="recipe_nm">레시피 이름</label><input type="text" id="recipe_nm" name="recipe_nm" placeholder="${recipe.recipe_nm}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_sumry">레시피 소개</label><input type="text" id="recipe_sumry" name="recipe_sumry" placeholder="${recipe.recipe_sumry}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_nation_nm">요리 분류&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label><input type="text" id="recipe_nation_nm" name="recipe_nation_nm" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="irdnt_code">식재료 공통 분류 ID &nbsp</label><input type="text" id="irdnt_code" name="irdnt_code" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_cooking_time">조리시간</label><input type="text" id="recipe_cooking_time" name="recipe_cooking_time" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_qnt">요리 분량</label><input type="text" id="recipe_qnt" name="recipe_qnt" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_calorie">칼로리</label><input type="text" id="recipe_calorie" name="recipe_calorie" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_level">요리 난이도</label><input type="text" id="recipe_level" name="recipe_level" />
-                                </td>
-                            </tr>
-                            <tr>
-                            <tr>
-                                <td>
-                                    <label for="cooking_dc">요리법 설명</label><input type="text" id="cooking_dc" name="cooking_dc" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="recipe_img_url">대표 이미지</label><input type="text" id="recipe_img_url" name="recipe_img_url" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="step_img_url">요리법 이미지</label><input type="text" id="step_img_url" name="step_img_url" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="admr_id">수정자 ID</label><input type="text" id="admr_id" name="admr_id" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="step_tip">요리 팁</label><input type="text" id="step_tip" name="step_tip" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>                        
-                                    <button type="submit" class="modify_btn">수정하기</button>
-                                    <button type="button" class="cancel_btn">취소</button>
-                                </td>
-                            </tr>           
-                        </tbody>            
-                    </table>
-                </form>
-            </section>
-</table>
-  
-</body>
+        
+        <div style="width:2000px; margin:0 auto; padding-bottom:100px; background:white; padding-top:50px;">
+            <!-- Recipe (내용 띄울 부분) -->
+            <form role="form" method="post" action="/board/modify">
+            <input type="hidden" id="user_seq" name="user_seq" value="${user_seq}">
+            <input type="hidden" id="recipe_seq" name="recipe_seq" value="${recipe_seq}">
+                <table id="writeTb" style="margin-bottom:30px;">
+                    <tbody>
+                        <tr>
+                            <td><label for="recipe_seq" class="label1" >레시피 번호</label></td>
+                            <td><input type="text" id="recipe_seq" name="recipe_seq" value="${recipe.recipe_seq}" disabled/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_nm" class="label1">레시피 이름</label></td>
+                            <td><input type="text" id="recipe_nm" name="recipe_nm" value="${recipe.recipe_nm}"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_nm" class="label1">요리 순서</label></td>
+                            <td><input type="text" id="cooking_no" name="cooking_no" value="${recipe.cooking_no}"/></td>
+                        </tr> 
+                        <tr>
+                            <td><label for="recipe_sumry" class="label1">레시피 소개</label></td>
+                            <td><textarea id="text" name="recipe_sumry">${recipe.recipe_sumry}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_nation_nm" class="label1">요리 분류</label></td>
+                            <td>
+                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="한식" name="recipe_nation_nm" >한식</label>
+                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="중식" name="recipe_nation_nm" style="margin-left:10px">중식</label>
+                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="일식" name="recipe_nation_nm" style="margin-left:10px">양식</label>
+                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="양식" name="recipe_nation_nm" style="margin-left:10px">일식</label>
+                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="기타" name="recipe_nation_nm" style="margin-left:10px">기타</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="irdnt_code" class="label1">식재료 공통 분류 코드ID</label></td>
+                            <td><input type="text" id="irdnt_code" name="irdnt_code"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_cooking_time" class="label1">조리시간</label></td>
+                            <td><input type="text" id="recipe_cooking_time" name="recipe_cooking_time"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_qnt" class="label1">요리 분량</label></td>
+                            <td><input type="text" id="recipe_qnt" name="recipe_qnt"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_calorie" class="label1">칼로리</label></td>
+                            <td><input type="text" id="recipe_calorie" name="recipe_calorie"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_level" class="label1">요리 난이도</label></td>
+                            <td>
+                                <label><input type="radio" name="recipe_level" value="초급"  style="margin-left:10px">초급 </label>
+                                <label><input type="radio" name="recipe_level" value="중급" style="margin-left:60px">중급 </label>
+                                <label><input type="radio" name="recipe_level" value="고급" style="margin-left:60px">고급</label>
+                            </td>
+                        <tr>
+                            <td><label for="recipe_img_url" class="label1">이미지</label></td>
+                            <td><input type="text" id="recipe_img_url" name="recipe_img_url"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_img_url" class="label1">요리 설명</label></td>
+                            <td><textarea id="text" name="cooking_dc">${recipe.cooking_dc}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_img_url" class="label1">요리 설명 이미지</label></td>
+                            <td><input type="text" id="step_image_url" name="step_image_url"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="recipe_img_url" class="label1">요리 팁</label></td>
+                            <td><input type="text" id="step_tip" name="step_tip"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="use_yn" class="label1">사용여부</label></td>
+                            <td>
+                                <label><input type="radio" name="use_yn" id="use_yn" value="Y" name="use_yn" style="margin-left:10px">예</label>
+                                <label><input type="radio" name="use_yn" id="use_yn" value="N" name="use_yn" style="margin-left:70px">아니오</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="cretr_id" class="label1">수정자</label></td>
+                            <td><input type="text" id="amdr_id" name="amdr_id" value="${recipe.cretr_id}"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="modify_btn" style="float:right; margin-right:150px;">수정하기</button>
+            </form>
+            <!-- 디자인 끝 -->
+            <a href="/board/detail/<c:out value="${user_seq}"/>/<c:out value="${recipe_seq}"/>"><button style="float:left; margin-left:150px;">돌아가기</button></a>
+            <!-- 내용 띄울 부분 끝 -->
+        </div>
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/resources/js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
 </html>

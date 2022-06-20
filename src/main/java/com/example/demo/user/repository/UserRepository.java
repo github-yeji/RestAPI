@@ -34,13 +34,10 @@ public class UserRepository {
 		
 		SqlParameterSource param = new MapSqlParameterSource("user_email", user.getUser_email())
 				.addValue("user_pwd", user.getUser_pwd());
-		try {
-			return namedParameterJdbcTemplate.queryForObject(Sql.USERLOGIN
+
+		return namedParameterJdbcTemplate.queryForObject(Sql.USERLOGIN
 				+ Sql.USER_EMAIL
 				+ Sql.USER_PASSWORD, param, this.userRowMapper);
-		}catch (IncorrectResultSizeDataAccessException error) { // 쿼리문에 해당하는 결과가 없거나 2개 이상일 때
-		    return null;
-		}
 		
 	}
 	
@@ -64,8 +61,13 @@ public class UserRepository {
 				.addValue("user_sex", user.getUser_sex())
 				.addValue("user_age", user.getUser_age());
 		
+		
 		namedParameterJdbcTemplate.update(Sql.USERINSERT, parameterSource, keyHolder);
 		user.setUser_seq(keyHolder.getKey().intValue());
+		
+		SqlParameterSource parameterSource2 = new MapSqlParameterSource("user_seq", user.getUser_seq());
+		namedParameterJdbcTemplate.update(Sql.USERREFRISEQINSERT, parameterSource2, keyHolder);
+		
 		return user;
 	}
 	

@@ -3,19 +3,17 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://10.1.4.106:3306/recipe_recommendation?useSSL=false&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://10.1.4.106:3306/recipe_recommendation
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: qwer
   mvc:
     view:
-      prefix: /WEB-INF/views/
+      prefix: /WEB-INF/views/board/
       suffix: .jsp
-    
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  file:
+    upload:
+      location: C:\eGovFrameDev-3.10.0-64bit\workspace2\rest_sample\src\main\webapp\resources\images\
+      

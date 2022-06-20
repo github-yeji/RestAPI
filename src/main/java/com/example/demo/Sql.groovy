@@ -45,6 +45,10 @@ class Sql{
 		INSERT INTO tb_user ( user_nm, user_email,user_pwd ,user_sex, user_age) values(:user_nm, :user_email,:user_pwd ,:user_sex,:user_age)
 	""";
 	
+	public static final String USERREFRISEQINSERT = """
+		INSERT INTO tb_refrigerator(refri_user_seq) values(:user_seq);
+	""";
+	
 	public static final String USERUPDATE="""
 			UPDATE tb_user SET user_nm = :user_nm, user_email=:user_email, user_pwd=:user_password,user_sex=:user_sex,user_age=:user_age WHERE 1=1
 		""";
