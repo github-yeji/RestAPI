@@ -1,6 +1,11 @@
 package com.example.demo.user;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.refri.model.UserRefri;
 import com.example.demo.user.model.User;
 
 @RestController
@@ -27,30 +33,52 @@ public class UserController {
 	public List<User>getAllUsers(){
 		return userService.getAllUsers();
 	}
+
 	
-	@GetMapping("/mypage")//마이페이지 추가부분
-	public Object MemberLogin(@RequestParam(value="user_email",required=false) String user_email
-			, @RequestParam(value="user_pwd",required=false) String user_pwd) {
-		
-		List<User> user = userService.findByUserPage(user_email, user_pwd);
-		return user;
-	}
-	
-	@GetMapping("/login")
-	public ResponseEntity<String> MemberLogin(@RequestBody User user) {
+	@PostMapping("/login")
+	public ResponseEntity<User> MemberLogin(@RequestBody User user, HttpSession session) {
 		try {
-			userService.findByUserLogin(user);
-			return new ResponseEntity<>(String.format("로그인 성공"), HttpStatus.OK);
+			User result = userService.findByUserLogin(user);
+			System.out.println(result+"=====login=====");
+			session.setAttribute("user_seq", result.getUser_seq());
+			System.out.println(session.getAttribute("user_seq"));
+			return new ResponseEntity<>(result, HttpStatus.OK);
+			
+			
 		}catch (Exception e) {
-			return new ResponseEntity<>(String.format("로그인 실패"), HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
+	@GetMapping("/login2")
+	public ResponseEntity<User> MemberLogin2(User user,HttpSession session) {
+		System.out.println("=======/users/login========");
+		try {
+			User result = userService.findByUserLogin(user);
+			System.out.println(result+"=====login=====");
+			session.setAttribute("user_seq", result.getUser_seq());
+			session.setAttribute("user_email", result.getUser_email());
+			session.setAttribute("user_pwd", result.getUser_pwd());
+			session.setAttribute("user_nm", result.getUser_nm());
+			session.setAttribute("user_age", result.getUser_age());
+			session.setAttribute("user_sex", result.getUser_sex());
+			System.out.println(session.getAttribute("user_seq"));
+			System.out.println(result);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+			
+			
+		}catch (Exception e) {
+			
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@ResponseBody
 	@PostMapping("/join")
-	public ResponseEntity<User> MemberAdd(User user) {
+	public ResponseEntity<User> MemberAdd(@RequestBody User user) {
 		try {
 			System.out.println(user.toString()+"USER CONTROLLER");
-			
 			return new ResponseEntity<>(userService.insert(user), HttpStatus.OK);
 			
 		}catch (Exception e) {
@@ -58,21 +86,32 @@ public class UserController {
 		}
 	}
 	
+	@ResponseBody
 	@PostMapping("/memberedit")
-	public ResponseEntity<String> MemberEdit(@RequestBody User user) {
+	public ResponseEntity<String> MemberEdit(@RequestBody User user, HttpSession session) {
 		try {
+			System.out.println(user+"================memedit=================");
 			Integer updatedCnt = userService.updateById(user);
+			session.setAttribute("user_seq", user.getUser_seq());
+			session.setAttribute("user_email", user.getUser_email());
+			session.setAttribute("user_pwd", user.getUser_pwd());
+			session.setAttribute("user_nm", user.getUser_nm());
+			session.setAttribute("user_age", user.getUser_age());
+			session.setAttribute("user_sex", user.getUser_sex());
 			return new ResponseEntity<>(String.format("%d updated", updatedCnt), HttpStatus.OK);
 		}catch (Exception e) {
+			System.out.println("===========Exception============="+e.getLocalizedMessage());
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@ResponseBody
 	@PostMapping("/memberdelete")
-	public ResponseEntity<String> cityDelete(@RequestParam(value="user_email") String email) {
+	public ResponseEntity<String> MemberDelete( @RequestParam(value="user_email", required=false) String email) {
 		try {
+			System.out.println(email);
 			Integer deletedCnt = userService.deleteById(email);
+			
 			return new ResponseEntity<>(String.format("%d deleted", deletedCnt), HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

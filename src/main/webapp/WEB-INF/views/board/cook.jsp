@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>레시피 정보</title>
+        <title>레시피 요리법 작성</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -138,69 +138,29 @@
         
         <div style="width:2000px; margin:0 auto; padding-bottom:100px; background:white; padding-top:50px;">
             <!-- Recipe (내용 띄울 부분) -->
-            <form role="form" method="post" action="/board/writting">
+            <form role="form" method="post" action="/board/cooking">
             <input type="hidden" id="user_seq" name="user_seq" value="${user_seq}">
                 <table id="writeTb" style="margin-bottom:30px;">
                     <tbody>
                         <tr>
                             <td><label for="recipe_seq" class="label1" >레시피 번호</label></td>
-                            <td><input type="text" id="recipe_seq" name="recipe_seq" /></td>
+                            <td><input type="text" id="recipe_seq" name="recipe_seq" value="${recipe_seq}" /></td>
                         </tr>
                         <tr>
-                            <td><label for="recipe_nm" class="label1">레시피 이름</label></td>
-                            <td><input type="text" id="recipe_nm" name="recipe_nm" /></td>
+                            <td><label for="cooking_no" class="label1">요리 설명 순서</label></td>
+                            <td><input type="text" id="cooking_no" name="cooking_no"/></td>
                         </tr>   
                         <tr>
-                            <td><label for="recipe_sumry" class="label1">레시피 소개</label></td>
-                            <td><textarea id="text" name="recipe_sumry" ></textarea></td>
+                            <td><label for="cooking_dc" class="label1">요리 설명</label></td>
+                            <td><textarea id="text" name="cooking_dc" ></textarea></td>
                         </tr>
                         <tr>
-                            <td><label for="recipe_nation_nm" class="label1">요리 분류</label></td>
-                            <td>
-                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="한식" name="recipe_nation_nm">한식</label>
-                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="중식" name="recipe_nation_nm" style="margin-left:10px">중식</label>
-                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="일식" name="recipe_nation_nm" style="margin-left:10px">양식</label>
-                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="양식" name="recipe_nation_nm" style="margin-left:10px">일식</label>
-                                <label><input type="radio" name="recipe_nation_nm" id="recipe_nation_nm" value="기타" name="recipe_nation_nm" style="margin-left:10px">기타</label>
-                            </td>
+                            <td><label for="step_img_url" class="label1">요리 설명 이미지</label></td>
+                            <td><input type="text" id="step_img_url" name="step_img_url" /></td>
                         </tr>
                         <tr>
-                            <td><label for="irdnt_grp_code" class="label1">식재료 코드 ID</label></td>
-                            <td><input type="text" id="irdnt_grp_code" name="irdnt_grp_code" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="irdnt_code" class="label1">식재료 공통 분류 ID</label></td>
-                            <td><input type="text" id="irdnt_code" name="irdnt_code" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="recipe_cooking_time" class="label1">조리시간</label></td>
-                            <td><input type="text" id="recipe_cooking_time" name="recipe_cooking_time" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="recipe_qnt" class="label1">요리 분량</label></td>
-                            <td><input type="text" id="recipe_qnt" name="recipe_qnt" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="recipe_calorie" class="label1">칼로리</label></td>
-                            <td><input type="text" id="recipe_calorie" name="recipe_calorie" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="recipe_level" class="label1">요리 난이도</label></td>
-                            <td>
-                                <label><input type="radio" name="recipe_level" value="초급"  style="margin-left:10px">초급 </label>
-                                <label><input type="radio" name="recipe_level" value="중급" style="margin-left:60px">중급 </label>
-                                <label><input type="radio" name="recipe_level" value="고급" style="margin-left:60px">고급</label>
-                            </td>
-                        <tr>
-                            <td><label for="recipe_img_url" class="label1">이미지</label></td>
-                            <td><input type="text" id="recipe_img_url" name="recipe_img_url" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="use_yn" class="label1">사용여부</label></td>
-                            <td>
-                                <label><input type="radio" name="use_yn" id="use_yn" value="Y" name="use_yn" style="margin-left:10px">예</label>
-                                <label><input type="radio" name="use_yn" id="use_yn" value="N" name="use_yn" style="margin-left:70px">아니오</label>
-                            </td>
+                            <td><label for="step_tip" class="label1">요리 팁</label></td>
+                            <td><input type="text" id="step_tip" name="step_tip" /></td>
                         </tr>
                         <tr>
                             <td><label for="cretr_id" class="label1">작성자</label></td>
@@ -211,7 +171,8 @@
                 <button type="submit" style="float:right; margin-right:150px;">작성</button>
             </form>
             <!-- 디자인 끝 -->
-            <a href="/board/list/<c:out value="${user_seq}"/>"><button style="float:left; margin-left:150px;">돌아가기</button></a>
+            <a href="/board/detail/<c:out value="${user_seq}"/>/<c:out value="${recipe_seq}"/>"><button style="float:left; margin-left:150px;">돌아가기</button></a>
+            <a href="/board/list/<c:out value="${user_seq}"/>"><button style="float:left; margin-left:30px;">글 목록</button></a>
             <!-- 내용 띄울 부분 끝 -->
         </div>
         

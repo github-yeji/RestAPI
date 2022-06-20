@@ -29,6 +29,7 @@ public class UserService {
 		return this.userRepository.findByUserPage(user_email, user_pwd);
 	}//마이페이지 추가부분
 	
+	
 	public User findByUserLogin(User user) {
 		return this.userRepository.findByUserLogin(user);
 	}
@@ -38,6 +39,7 @@ public class UserService {
 		return this.userRepository.insert(user);
 	}
 	public Integer updateById(User user) {
+		System.out.println(user+"================updateById=================");
 		return userRepository.updateById(user);
 	}
 	public Integer deleteById(String email) {

@@ -34,11 +34,11 @@ public class UserRepository {
 		
 		SqlParameterSource param = new MapSqlParameterSource("user_email", user.getUser_email())
 				.addValue("user_pwd", user.getUser_pwd());
-		
+
 		return namedParameterJdbcTemplate.queryForObject(Sql.USERLOGIN
 				+ Sql.USER_EMAIL
 				+ Sql.USER_PASSWORD, param, this.userRowMapper);
-
+		
 	}
 	
 	public List<User> findByUserPage(String user_email, String user_pwd){
@@ -59,8 +59,15 @@ public class UserRepository {
 				.addValue("user_email", user.getUser_email())
 				.addValue("user_pwd", user.getUser_pwd())
 				.addValue("user_sex", user.getUser_sex())
-				.addValue("user_age", user.getUser_age()); 
-		int affectedRows = namedParameterJdbcTemplate.update(Sql.USERINSERT, parameterSource, keyHolder);
+				.addValue("user_age", user.getUser_age());
+		
+		
+		namedParameterJdbcTemplate.update(Sql.USERINSERT, parameterSource, keyHolder);
+		user.setUser_seq(keyHolder.getKey().intValue());
+		
+		SqlParameterSource parameterSource2 = new MapSqlParameterSource("user_seq", user.getUser_seq());
+		namedParameterJdbcTemplate.update(Sql.USERREFRISEQINSERT, parameterSource2, keyHolder);
+		
 		return user;
 	}
 	
